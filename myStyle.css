@@ -3,12 +3,20 @@
     --height: 10%;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    margin: 0;
+}
+
 #grid-container {
-    box-sizing:border-box;
     display: flex;
     flex-wrap: wrap;
-    border: 2px solid black;
-    max-width: 920px;
+    border: 1px solid black;
+    width: 45%;
     aspect-ratio: 1/1;
 }
 
