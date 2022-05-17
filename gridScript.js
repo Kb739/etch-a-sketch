@@ -2,10 +2,11 @@
 const colorGrid = document.querySelector('#colorBox');
 const grid = document.querySelector('#grid-container');
 const root = document.querySelector(':root');
-const button = document.querySelector('button');
+const sizeButton = document.querySelector('#sizeButton');
+const alphaButton = document.querySelector('#palette>button');
 
 let colorPick = [0, 0, 0];
-const alpha = 0.25;
+let alpha = 1;
 generatePalette(3);
 
 
@@ -18,7 +19,8 @@ window.onmousedown = ((e) => {
 });
 window.onmouseup = (() => mouseDown = 0);
 
-button.addEventListener('click', inputGridSize);
+sizeButton.addEventListener('click', inputGridSize);
+alphaButton.addEventListener('click', inputAlpha);
 
 function inputGridSize(e) {
     let input = prompt('input grid size');
@@ -29,8 +31,20 @@ function inputGridSize(e) {
             createGrid(input);
         }
         else {
-            alert('invalid input : enter a number');
+            alert('invalid input');
         }
+    }
+}
+function inputAlpha(e) {
+    let input = prompt('enter alpha value (0-1)');
+
+    if (input) {
+        input = Number(input);
+        console.log(input);
+        if (input != NaN)
+            alpha = input;
+        else
+            alert('invalid input');
     }
 }
 
