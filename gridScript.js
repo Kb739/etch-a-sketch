@@ -23,30 +23,32 @@ sizeButton.addEventListener('click', inputGridSize);
 alphaButton.addEventListener('click', inputAlpha);
 
 function inputGridSize(e) {
-    let input = prompt('input grid size');
+    let input = prompt('input grid size (0 < integer < 65)');
     if (input) {
         input = Number(input);
-        if (input) {
-            deleteOldGrid();
-            createGrid(input);
+        if (input && Number.isInteger(input)) {
+            if (input > 0 && input < 65) {
+                deleteOldGrid();
+                createGrid(input);
+                return;
+            }
         }
-        else {
-            alert('invalid input');
-        }
+        alert('invalid input');
     }
 }
 function inputAlpha(e) {
-    let input = prompt('enter alpha value (0-1)');
+    let input = prompt('enter value (0-1)');
 
     if (input) {
         input = Number(input);
         console.log(input);
         if (input != NaN) {
-            if (input >= 0 && input <= 1)
+            if (input >= 0 && input <= 1) {
                 alpha = input;
-            else
-                alert('invalid input');
+                return;
+            }
         }
+        alert('invalid input');
     }
 }
 
