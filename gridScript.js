@@ -41,10 +41,12 @@ function inputAlpha(e) {
     if (input) {
         input = Number(input);
         console.log(input);
-        if (input != NaN)
-            alpha = input;
-        else
-            alert('invalid input');
+        if (input != NaN) {
+            if (input >= 0 && input <= 1)
+                alpha = input;
+            else
+                alert('invalid input');
+        }
     }
 }
 
