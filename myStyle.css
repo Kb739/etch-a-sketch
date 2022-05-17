@@ -1,6 +1,9 @@
 :root {
     --width: 10%;
     --height: 10%;
+
+    --p-width:10%;
+    --p-height:10%;
 }
 
 body {
@@ -40,18 +43,23 @@ button {
 }
 
 #colorBox {
-    background-color: aqua;
     margin: 10%;
 }
 
 #grid-container {
-    background-color: red;
     width: 45%;
 }
 
 .square {
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.075);
     box-sizing: border-box;
     width: var(--width);
     height: var(--height);
+}
+
+.color-square {
+    /* border: 1px solid black; */
+    box-sizing: border-box;
+    width: var(--p-width);
+    height: var(--p-height);
 }

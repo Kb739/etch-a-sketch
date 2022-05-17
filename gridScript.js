@@ -1,13 +1,13 @@
 
-
+const colorGrid = document.querySelector('#colorBox');
 const grid = document.querySelector('#grid-container');
 const root = document.querySelector(':root');
 const button = document.querySelector('button');
 
 let colorPick = [0, 0, 0];
 const alpha = 0.25;
+generatePalette(3);
 
-button.addEventListener('click', inputGridSize);
 
 let mouseDown = 0;
 window.onmousedown = ((e) => {
@@ -18,6 +18,7 @@ window.onmousedown = ((e) => {
 });
 window.onmouseup = (() => mouseDown = 0);
 
+button.addEventListener('click', inputGridSize);
 
 function inputGridSize(e) {
     let input = prompt('input grid size');
@@ -33,14 +34,28 @@ function inputGridSize(e) {
     }
 }
 
+function generatePalette(size) {
+    root.style.setProperty('--p-width', `${100 / size}%`);
+    root.style.setProperty('--p-height', `${100 / size}%`);
+    const blockCount = size * size;
+    for (let i = 0; i < blockCount; i++) {
+        const block = document.createElement('div');
+        block.style.backgroundColor = i < blockCount - 1 ? genreateRandomColor() : 'rgb(0,0,0)';
+        block.onclick = (e => colorPick = rgbToArray(e.target.style.backgroundColor));
+        block.classList.add('color-square');
+        colorGrid.appendChild(block);
+    }
+}
+
 function createGrid(gridSize) {
-    root.style = `--width:${100 / gridSize}%;--height:${100 / gridSize}%`;
+    root.style.setProperty('--width', `${100 / gridSize}%`);
+    root.style.setProperty('--height', `${100 / gridSize}%`);
     const blockCount = gridSize * gridSize;
     for (let i = 0; i < blockCount; i++) {
         const square = document.createElement('div');
 
         square.style.backgroundColor = 'rgb(255,255,255)';
-        square.onmouseover = ((e) => mouseDown && shade(e));
+        square.onmouseover = (e => mouseDown && shade(e));
 
         square.classList.add('square');
         grid.appendChild(square);
@@ -57,18 +72,25 @@ function deleteOldGrid() {
 
 function shade(event) {
 
-    let rgb = event.target.style.backgroundColor;
-    let colorArr = rgb.slice(rgb.indexOf('(') + 1, rgb.indexOf(')')).split(',');
-
-    for (let i = 0; i < colorArr.length; i++) {
-        colorArr[i] = lerp(colorPick[i], colorArr[i], alpha);
+    let blockColor = rgbToArray(event.target.style.backgroundColor);
+    console.log(blockColor);
+    for (let i = 0; i < 3; i++) {
+        blockColor[i] = lerp(colorPick[i], blockColor[i], alpha);
     }
-    rgb = 'rgb(' + colorArr.toString() + ')';
-    event.target.style.backgroundColor = rgb;
+    event.target.style.backgroundColor = 'rgb(' + blockColor.toString() + ')';
+}
+
+function rgbToArray(color) {
+    return color.slice(color.indexOf('(') + 1, color.indexOf(')')).split(',');
 }
 
 function lerp(a, b, alpha) {
     return Math.floor((b - b * alpha) + (a * alpha));
 }
-
+function genreateRandomColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r},${g},${b})`;
+}
 
